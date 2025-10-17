@@ -11,6 +11,8 @@
   "author": "suraj sencha",
   "license": "ISC",
   "dependencies": {
+    "@arcjet/inspect": "^1.0.0-beta.13",
+    "@arcjet/node": "^1.0.0-beta.13",
     "bcryptjs": "^2.4.3",
     "chat": "file:..",
     "cloudinary": "^2.5.1",
