@@ -5,11 +5,18 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import { ENV } from "./lib/env.js";
+import cors from "cors";
 
 const PORT = ENV.PORT || 3000;
 const app = express();
 const __dirname = path.resolve();
 app.use(express.json()); // <-- parses JSON bodies
+app.use(
+  cors({
+    origin: ENV.CLIENT_URL,
+    credentials: true,
+  })
+);
 app.use(cookieParser()); // <-- parses cookies
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);

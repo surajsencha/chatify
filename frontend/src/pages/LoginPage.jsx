@@ -1,57 +1,111 @@
-function LoginPage() {
+import React, { useState } from "react";
+import {
+  MessageCircleIcon,
+  MailIcon,
+  LoaderIcon,
+  LockIcon,
+} from "lucide-react";
+import { Link } from "react-router-dom"; // use react-router-dom
+import { useAuthStore } from "../store/useAuthStore";
+import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
+
+export default function LoginPage() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const { login, isLoggingIn } = useAuthStore();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(formData);
+  };
+
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-300/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-purple-300/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-56 h-56 bg-pink-300/30 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
-
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4">
-        <div className="card bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl p-10 max-w-lg w-full text-center">
-          <div className="card-body items-center justify-center space-y-6">
-            <h2 className="card-title text-4xl font-bold mb-6 text-black">
-              Login
+    <div className="min-h-screen flex items-center justify-center  p-4">
+      <BorderAnimatedContainer>
+        {/* Single centered card */}
+        <div className="w-full max-w-md p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
+          {/* Heading */}
+          <div className="text-center mb-8">
+            <MessageCircleIcon className="w-12 h-12 mx-auto text-gray-800 mb-4" />
+            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+              Welcome Back
             </h2>
+            <p className="text-gray-800 text-sm">
+              Login to access your account
+            </p>
+          </div>
 
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text text-lg text-black">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="input input-bordered input-lg w-full bg-white/50 border-white/30"
-              />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email */}
+            <div>
+              <label className="block text-sm text-gray-800 mb-1">Email</label>
+              <div className="relative">
+                <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-800" />
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  placeholder="johndoe@gmail.com"
+                  className="w-full pl-10 pr-3 py-3 bg-white/20 border border-white/20 rounded-lg text-gray-800 placeholder-gray-800"
+                />
+              </div>
             </div>
 
-            <div className="form-control w-full mt-4">
-              <label className="label">
-                <span className="label-text text-lg text-black">Password</span>
+            {/* Password */}
+            <div>
+              <label className="block text-sm text-gray-800 mb-1">
+                Password
               </label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="input input-bordered input-lg w-full bg-white/50 border-white/30"
-              />
+              <div className="relative">
+                <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-800" />
+                <input
+                  type="password"
+                  required
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  placeholder="Enter your password"
+                  className="w-full pl-10 pr-3 py-3 bg-white/20 border border-white/20 rounded-lg text-gray-800 placeholder-gray-800"
+                />
+              </div>
             </div>
 
-            <div className="card-actions justify-center gap-6 mt-8 w-full">
-              <a
-                href="/"
-                className="btn btn-secondary btn-lg px-10 py-4 glass text-black text-lg min-h-14 h-14"
+            {/* Buttons */}
+            <div className="flex gap-4 pt-2">
+              <Link
+                to="/"
+                className="flex-1 text-center px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-gray-800 hover:bg-white/20 transition"
               >
                 Back
-              </a>
-              <button className="btn btn-primary btn-lg px-10 py-4 glass text-black text-lg min-h-14 h-14">
-                Login
+              </Link>
+
+              <button
+                type="submit"
+                disabled={isLoggingIn}
+                className="flex-1 px-4 py-3 rounded-lg bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition disabled:opacity-50"
+              >
+                {isLoggingIn ? (
+                  <LoaderIcon className="w-5 h-5 mx-auto animate-spin" />
+                ) : (
+                  "Log In"
+                )}
               </button>
             </div>
-          </div>
+
+            {/* Signup link */}
+            <p className="text-center text-sm text-gray-800 mt-3">
+              Don’t have an account?
+              <Link to="/signup" className="ml-1 text-cyan-400 hover:underline">
+                Sign Up
+              </Link>
+            </p>
+          </form>
         </div>
-      </div>
+      </BorderAnimatedContainer>
     </div>
   );
 }
-
-export default LoginPage;

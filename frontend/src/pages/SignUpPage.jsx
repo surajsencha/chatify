@@ -1,68 +1,112 @@
-function SignUpPage() {
+import React, { useState } from "react";
+import { UserIcon, MailIcon, LockIcon } from "lucide-react";
+import { Link } from "react-router-dom"; // change if using react-router
+
+export default function SignUpPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Signup Data:", formData);
+  };
+
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-300/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-purple-300/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-56 h-56 bg-pink-300/30 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center p-4">
+      {/* Single centered container */}
+      <div className="w-full max-w-md rounded-2xl p-8 bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl">
+        {/* Heading */}
+        <div className="text-center mb-8">
+          <UserIcon className="w-12 h-12 mx-auto text-gray-800 mb-3" />
+          <h1 className="text-3xl font-bold text-gray-800">Create Account</h1>
+          <p className="text-gray-800 text-sm mt-1">Join us today</p>
+        </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full p-4">
-        <div className="card bg-white/10 backdrop-blur-2xl border border-white/20 shadow-2xl p-10 max-w-lg w-full text-center">
-          <div className="card-body items-center justify-center space-y-6">
-            <h2 className="card-title text-4xl font-bold mb-6 text-black">
-              Sign Up
-            </h2>
-
-            <div className="form-control w-full">
-              <label className="label">
-                <span className="label-text text-lg text-black">Name</span>
-              </label>
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* NAME */}
+          <label className="block">
+            <span className="text-sm text-gray-800 mb-1 block">Name</span>
+            <div className="relative">
+              <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-800" />
               <input
                 type="text"
-                placeholder="Enter your name"
-                className="input input-bordered input-lg w-full bg-white/50 border-white/30"
+                required
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                placeholder="John Doe"
+                className="w-full pl-10 pr-3 py-3 rounded-lg bg-white/20 border border-white/20 placeholder-gray-800 text-gray-800"
               />
             </div>
+          </label>
 
-            <div className="form-control w-full mt-4">
-              <label className="label">
-                <span className="label-text text-lg text-black">Email</span>
-              </label>
+          {/* EMAIL */}
+          <label className="block">
+            <span className="text-sm text-gray-800 mb-1 block">Email</span>
+            <div className="relative">
+              <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-800" />
               <input
                 type="email"
-                placeholder="Enter your email"
-                className="input input-bordered input-lg w-full bg-white/50 border-white/30"
+                required
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                placeholder="example@gmail.com"
+                className="w-full pl-10 pr-3 py-3 rounded-lg bg-white/20 border border-white/20 placeholder-gray-800 text-gray-800"
               />
             </div>
+          </label>
 
-            <div className="form-control w-full mt-4">
-              <label className="label">
-                <span className="label-text text-lg text-black">Password</span>
-              </label>
+          {/* PASSWORD */}
+          <label className="block">
+            <span className="text-sm text-gray-800 mb-1 block">Password</span>
+            <div className="relative">
+              <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-800" />
               <input
                 type="password"
-                placeholder="Create a password"
-                className="input input-bordered input-lg w-full bg-white/50 border-white/30"
+                required
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                placeholder="Create a strong password"
+                className="w-full pl-10 pr-3 py-3 rounded-lg bg-white/20 border border-white/20 placeholder-gray-800 text-gray-800"
               />
             </div>
+          </label>
 
-            <div className="card-actions justify-center gap-6 mt-8 w-full">
-              <a
-                href="/"
-                className="btn btn-secondary btn-lg px-10 py-4 glass text-black text-lg min-h-14 h-14"
-              >
-                Back
-              </a>
-              <button className="btn btn-primary btn-lg px-10 py-4 glass text-black text-lg min-h-14 h-14">
-                Sign Up
-              </button>
-            </div>
+          {/* ACTIONS */}
+          <div className="flex gap-4 pt-2">
+            <Link
+              to="/"
+              className="flex-1 text-center px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-800 hover:bg-white/20 transition"
+            >
+              Back
+            </Link>
+
+            <button
+              type="submit"
+              className="flex-1 px-4 py-3 rounded-lg bg-cyan-400 text-black font-semibold hover:bg-cyan-300 transition"
+            >
+              Sign Up
+            </button>
           </div>
-        </div>
+        </form>
+
+        {/* LOGIN LINK */}
+        <p className="text-center text-gray-800 text-sm mt-4">
+          Already have an account?
+          <Link to="/login" className="text-cyan-400 hover:underline ml-1">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
 }
-
-export default SignUpPage;
